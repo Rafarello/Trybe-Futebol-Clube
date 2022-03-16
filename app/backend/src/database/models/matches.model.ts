@@ -9,11 +9,11 @@ class Matches extends Model {
 }
 
 Matches.init({
-  home_team: DataTypes.INTEGER,
-  home_team_goals: DataTypes.INTEGER,
-  away_team: DataTypes.INTEGER,
-  away_team_goals: DataTypes.INTEGER,
-  in_progress: DataTypes.TINYINT,
+  homeTeam: DataTypes.INTEGER,
+  homeTeamGoals: DataTypes.INTEGER,
+  awayTeam: DataTypes.INTEGER,
+  awayTeamGoals: DataTypes.INTEGER,
+  inProgress: DataTypes.TINYINT,
 }, {
   // ... Outras configs
   underscored: true,
