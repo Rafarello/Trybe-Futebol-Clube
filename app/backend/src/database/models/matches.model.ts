@@ -1,14 +1,14 @@
 import { Model, DataTypes } from 'sequelize';
 import db from '.';
-// import Clubs from './clubs.model';
+import Clubs from './clubs.model';
 
 // import OtherModel from './OtherModel';
 
-class Matches extends Model {
+class Matchs extends Model {
   // public <campo>!: <tipo>;
 }
 
-Matches.init({
+Matchs.init({
   homeTeam: DataTypes.INTEGER,
   homeTeamGoals: DataTypes.INTEGER,
   awayTeam: DataTypes.INTEGER,
@@ -18,21 +18,15 @@ Matches.init({
   // ... Outras configs
   underscored: true,
   sequelize: db,
-  modelName: 'Matches',
-  tableName: 'Matches',
+  modelName: 'matchs',
+  tableName: 'matchs',
   timestamps: false,
 });
 
-/**
-  * `Workaround` para aplicar as associations em TS:
-  * Associations 1:N devem ficar em uma das instâncias de modelo
-  * */
+// Association de models
+// https://sequelize.org/master/manual/assocs.html
+Matchs.hasMany(Clubs, { foreignKey: 'id', as: 'home_team' });
+Matchs.hasMany(Clubs, { foreignKey: 'id', as: 'away_team' });
+Clubs.belongsTo(Matchs);
 
-// OtherModel.belongsTo(Matches, { foreignKey: 'campoA', as: 'campoEstrangeiroA' });
-// OtherModel.belongsTo(Matches, { foreignKey: 'campoB', as: 'campoEstrangeiroB' });
-
-// Matches.hasMany(Clubs, { foreignKey: 'id', as: 'home_team' });
-// Matches.hasMany(Clubs, { foreignKey: 'id', as: 'away_team' });
-// Matches.hasMany(OtherModel, { foreignKey: 'campoD', as: 'campoEstrangeiroD' });
-
-export default Matches;
+export default Matchs;
