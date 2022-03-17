@@ -19,6 +19,9 @@ class App {
     };
 
     this.app.use(accessControl);
+    this.app.get('/', (_request, response) => {
+      response.send();
+    });
     // ...
   }
 
