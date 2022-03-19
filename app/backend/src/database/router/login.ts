@@ -1,5 +1,7 @@
 import express = require('express');
 
+import LoginController from '../controllers/Login';
+
 // Vídeos usados como referência:
 // # Como criar o Router com Class:
 // # OBS: Vídeo incrível e super didático << rever novamente depois
@@ -16,7 +18,7 @@ class LoginRoutes {
   }
 
   loadRoutes() {
-    this.router.post('/login', () => console.log('Post com sucesso'));
+    this.router.post('/login', LoginController.userValidation.bind(LoginController));
     this.router.get('/login', () => console.log('Get feito com sucesso'));
   }
 }

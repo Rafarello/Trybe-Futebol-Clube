@@ -1,5 +1,9 @@
 // Código reaproveitado de um projeto anterior;
 
+// # Tipagem de retorno
+
+export type ValidationResponse = { status: number, message?: { message: string } };
+
 // # Mensagens de Erro:
 
 const emailInvalid = {
@@ -24,9 +28,12 @@ const emailExists = (email: string | unknown) => {
 };
 
 const validateEmail = (email: string) => {
-  const MINIMUM_LENGTH = 1;
+  // Regex exemplo usado em projetos anteriores (desde o ciclo de fundamentos), visto em:
+  // https://stackoverflow.com/questions/46155/whats-the-best-way-to-validate-an-email-address-in-javascript
+  const re = /\S+@\S+\.\S+/;
+
   if (typeof email !== 'string') return false;
-  if (email.length < MINIMUM_LENGTH) return false;
+  if (re.test(email)) return false;
   return true;
 };
 
@@ -36,45 +43,40 @@ const passwordExists = (password: string | unknown) => {
 };
 
 const validatePassword = (password: string) => {
-  const MINIMUM_LENGTH = 1;
+  const MINIMUM_LENGTH = 6;
   if (typeof password !== 'string') return false;
   if (password.length < MINIMUM_LENGTH) return false;
   return true;
 };
 
-const validateEmailInfo = (email: string) => {
+export const validateEmailInfo = (email: string) => {
   if (!emailExists(email)) {
     return {
-      status: 400,
+      status: 401,
       message: emailRequired,
     };
   }
   if (!validateEmail(email)) {
     return {
-      status: 400,
+      status: 401,
       message: emailInvalid,
     };
   }
-  return 200;
+  return { status: 200 };
 };
 
-const validatePasswordInfo = (password: string) => {
+export const validatePasswordInfo = (password: string) => {
   if (!passwordExists(password)) {
     return {
-      status: 400,
+      status: 401,
       message: passwordRequired,
     };
   }
   if (!validatePassword(password)) {
     return {
-      status: 400,
+      status: 401,
       message: passwordInvalid,
     };
   }
-  return 200;
-};
-
-module.exports = {
-  validateEmailInfo,
-  validatePasswordInfo,
+  return { status: 200 };
 };

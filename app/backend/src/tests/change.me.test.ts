@@ -14,6 +14,7 @@ const { expect } = chai;
 
 // Exemplo de testes com Chai
 // https://www.digitalocean.com/community/tutorials/test-a-node-restful-api-with-mocha-and-chai
+// https://medium.com/practical-software-testing/api-testing-with-mocha-and-chai-944c2f26c340
 
 describe('Desenvolva o endpoint /login no backend de maneira que ele permita o acesso com dados válidos no frontend', () => {
   /**
@@ -47,10 +48,9 @@ describe('Desenvolva o endpoint /login no backend de maneira que ele permita o a
       .post('/login')
       .send(body)
       .end((_err, res) => {
-        res.should.have.status(400);
+        res.should.have.status(200);
         res.body.should.be.a('object');
-        res.body.should.have.property('message');
-        res.body.should.have.property('message').equal('Incorrect email or password');
+        res.body.should.have.property('user', 'token');
       });
   });
 
@@ -61,7 +61,7 @@ describe('Desenvolva o endpoint /login no backend de maneira que ele permita o a
         .post('/login')
         .send(body)
         .end((_err, res) => {
-          res.should.have.status(400);
+          res.should.have.status(401);
           res.body.should.be.a('object');
           res.body.should.have.property('message');
           res.body.should.have.property('message').equal('Incorrect email or password');
@@ -74,7 +74,7 @@ describe('Desenvolva o endpoint /login no backend de maneira que ele permita o a
         .post('/login')
         .send(body)
         .end((_err, res) => {
-          res.should.have.status(400);
+          res.should.have.status(401);
           res.body.should.be.a('object');
           res.body.should.have.property('message');
           res.body.should.have.property('message').equal('Incorrect email or password');
@@ -89,7 +89,7 @@ describe('Desenvolva o endpoint /login no backend de maneira que ele permita o a
         .post('/login')
         .send(body)
         .end((_err, res) => {
-          res.should.have.status(400);
+          res.should.have.status(401);
           res.body.should.be.a('object');
           res.body.should.have.property('message');
           res.body.should.have.property('message').equal('Incorrect email or password');
@@ -103,7 +103,7 @@ describe('Desenvolva o endpoint /login no backend de maneira que ele permita o a
         .post('/login')
         .send(body)
         .end((_err, res) => {
-          res.should.have.status(400);
+          res.should.have.status(401);
           res.body.should.be.a('object');
           res.body.should.have.property('message');
           res.body.should.have.property('message').equal('Incorrect email or password');
@@ -117,7 +117,7 @@ describe('Desenvolva o endpoint /login no backend de maneira que ele permita o a
       .post('/login')
       .send(body)
       .end((_err, res) => {
-        res.should.have.status(400);
+        res.should.have.status(401);
         res.body.should.be.a('object');
         res.body.should.have.property('message');
         res.body.should.have.property('message').equal('All fields must be filled');
@@ -130,7 +130,7 @@ describe('Desenvolva o endpoint /login no backend de maneira que ele permita o a
       .post('/login')
       .send(body)
       .end((_err, res) => {
-        res.should.have.status(400);
+        res.should.have.status(401);
         res.body.should.be.a('object');
         res.body.should.have.property('message');
         res.body.should.have.property('message').equal('All fields must be filled');
