@@ -42,7 +42,7 @@ describe('Desenvolva o endpoint /login no backend de maneira que ele permita o a
   //   expect(...)
   // });
   it('Será validado que é possível fazer login com sucesso com as informações corretas', async () => {
-    const body = { email: 'email@email.com', password: '12345678' };
+    const body = { email: 'email@email.com', password: '123456' };
     chai.request(app)
       .post('/login')
       .send(body)
@@ -56,7 +56,7 @@ describe('Desenvolva o endpoint /login no backend de maneira que ele permita o a
 
   describe('Será validado que não é possível fazer login com um email inválido', async () => {
     it('Retornará erro se o email for inválido', async () => {
-      const body = { email: 'wrongemail', password: '12345678' };
+      const body = { email: 'wrongemail', password: '123456' };
       chai.request(app)
         .post('/login')
         .send(body)
@@ -69,7 +69,7 @@ describe('Desenvolva o endpoint /login no backend de maneira que ele permita o a
     });
 
     it('Retornará erro se o email não for string', async () => {
-      const body = { email: 123456, password: '12345678' };
+      const body = { email: 123456, password: '123456' };
       chai.request(app)
         .post('/login')
         .send(body)
@@ -98,7 +98,7 @@ describe('Desenvolva o endpoint /login no backend de maneira que ele permita o a
     });
 
     it('Retornará erro se o password não for string', async () => {
-      const body = { email: 'email@email.com', password: 12345678 };
+      const body = { email: 'email@email.com', password: 123456 };
       chai.request(app)
         .post('/login')
         .send(body)
@@ -112,7 +112,7 @@ describe('Desenvolva o endpoint /login no backend de maneira que ele permita o a
   });
 
   it('Será validado que o campo "email" se encontra no corpo da requisição', async () => {
-    const body = { email: undefined, password: '12345678' };
+    const body = { email: undefined, password: '123456' };
     chai.request(app)
       .post('/login')
       .send(body)

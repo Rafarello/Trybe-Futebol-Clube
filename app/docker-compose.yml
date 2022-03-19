@@ -3,13 +3,13 @@ services:
   frontend:
     build: ./frontend
     # ...
+    ports:
+      - 3000:3000
     depends_on:
       backend:
         condition: service_healthy
     # Os `healthcheck` devem garantir que a aplicação
     # está operacional, antes de liberar o container
-    ports:
-      - 3000:3000
     healthcheck:
       test: ["CMD", "lsof", "-t", "-i:3000"]  # Caso utilize outra porta interna para o front, altere ela aqui também
       timeout: 10s
@@ -17,11 +17,11 @@ services:
   backend:
     build: ./backend
     # ...
+    ports:
+      - 3001:3001
     depends_on:
       db:
         condition: service_healthy
-    ports:
-      - 3001:3001
     environment:
       - PORT=3001
       # Os dados abaixo se referem ao container `db`
