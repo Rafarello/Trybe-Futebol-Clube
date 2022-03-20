@@ -18,7 +18,11 @@ class LoginRoutes {
   }
 
   loadRoutes() {
-    this.router.post('/login', LoginController.userValidation.bind(LoginController));
+    this.router.post(
+      '/login',
+      LoginController.userValidation.bind(LoginController),
+      LoginController.login.bind(LoginController),
+    );
     this.router.get('/login', () => console.log('Get feito com sucesso'));
   }
 }

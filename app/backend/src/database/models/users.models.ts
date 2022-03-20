@@ -5,6 +5,15 @@ import db from '.';
 
 class Users extends Model {
   // public <campo>!: <tipo>;
+  public id: number;
+
+  public username: string;
+
+  public role: string;
+
+  public email: string;
+
+  public password: string;
 }
 
 Users.init({

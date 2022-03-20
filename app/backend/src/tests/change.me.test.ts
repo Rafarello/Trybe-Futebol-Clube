@@ -54,61 +54,59 @@ describe('Desenvolva o endpoint /login no backend de maneira que ele permita o a
       });
   });
 
-  describe('Será validado que não é possível fazer login com um email inválido', async () => {
-    it('Retornará erro se o email for inválido', async () => {
-      const body = { email: 'wrongemail', password: '123456' };
-      chai.request(app)
-        .post('/login')
-        .send(body)
-        .end((_err, res) => {
-          res.should.have.status(401);
-          res.body.should.be.a('object');
-          res.body.should.have.property('message');
-          res.body.should.have.property('message').equal('Incorrect email or password');
-        });
-    });
-
-    it('Retornará erro se o email não for string', async () => {
-      const body = { email: 123456, password: '123456' };
-      chai.request(app)
-        .post('/login')
-        .send(body)
-        .end((_err, res) => {
-          res.should.have.status(401);
-          res.body.should.be.a('object');
-          res.body.should.have.property('message');
-          res.body.should.have.property('message').equal('Incorrect email or password');
-        });
-    });
+  it('Retornará erro se o email for inválido', async () => {
+    const body = { email: 'wrongemail', password: '123456' };
+    chai.request(app)
+      .post('/login')
+      .send(body)
+      .end((_err, res) => {
+        res.should.have.status(401);
+        console.log(res);
+        
+        res.body.should.be.a('object');
+        res.body.should.have.property('message');
+        res.body.should.have.property('message').equal('Incorrect email or password');
+      });
   });
 
-  describe('Será validado que não é possível fazer login com um password inválido', async () => {
-    it('Retornará erro se o password for inválido', async () => {
-      const body = { email: 'email@email.com', password: '123' };
-      chai.request(app)
-        .post('/login')
-        .send(body)
-        .end((_err, res) => {
-          res.should.have.status(401);
-          res.body.should.be.a('object');
-          res.body.should.have.property('message');
-          res.body.should.have.property('message').equal('Incorrect email or password');
-        });
+  it('Retornará erro se o email não for string', async () => {
+    const body = { email: 123456, password: '123456' };
+    chai.request(app)
+      .post('/login')
+      .send(body)
+      .end((_err, res) => {
+        res.should.have.status(401);
+        res.body.should.be.a('object');
+        res.body.should.have.property('message');
+        res.body.should.have.property('message').equal('Incorrect email or password');
+      });
+  });
 
-    });
+  it('Retornará erro se o password for inválido', async () => {
+    const body = { email: 'email@email.com', password: '123' };
+    chai.request(app)
+      .post('/login')
+      .send(body)
+      .end((_err, res) => {
+        res.should.have.status(401);
+        res.body.should.be.a('object');
+        res.body.should.have.property('message');
+        res.body.should.have.property('message').equal('Incorrect email or password');
+      });
 
-    it('Retornará erro se o password não for string', async () => {
-      const body = { email: 'email@email.com', password: 123456 };
-      chai.request(app)
-        .post('/login')
-        .send(body)
-        .end((_err, res) => {
-          res.should.have.status(401);
-          res.body.should.be.a('object');
-          res.body.should.have.property('message');
-          res.body.should.have.property('message').equal('Incorrect email or password');
-        });
-    });
+  });
+
+  it('Retornará erro se o password não for string', async () => {
+    const body = { email: 'email@email.com', password: 123456 };
+    chai.request(app)
+      .post('/login')
+      .send(body)
+      .end((_err, res) => {
+        res.should.have.status(401);
+        res.body.should.be.a('object');
+        res.body.should.have.property('message');
+        res.body.should.have.property('message').equal('Incorrect email or password');
+      });
   });
 
   it('Será validado que o campo "email" se encontra no corpo da requisição', async () => {
