@@ -1,6 +1,8 @@
 import UsersModel from '../models/users.models';
 
-const findOne = async (queryObject: object) => {
+// # Funções úteis para facilitar o uso do Model Users
+
+const findOneUser = async (queryObject: object) => {
   const userData = await UsersModel.findOne({ where: queryObject });
   return userData;
 };
@@ -10,6 +12,6 @@ const getAll = async () => {
   return allUsers;
 };
 export {
-  findOne,
+  findOneUser,
   getAll,
 };

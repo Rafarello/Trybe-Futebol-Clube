@@ -7,9 +7,10 @@ import {
   ValidationResponse,
   UserInfo,
   emailInvalid,
-} from '../utils/loginValidation';
+} from '../services/loginValidation';
 import Users from '../models/users.models';
-// import { findOne } from '../utils/loginModels';
+import { findOneUser } from '../services/loginModels';
+import TokenService from '../services/tokenValidation';
 
 // Vídeos usados como referência:
 // # Como criar o Controller com Class
@@ -23,6 +24,8 @@ class LoginController {
 
   validatePassword: (password: string) => ValidationResponse;
 
+  Token;
+
   secret: string;
 
   jwt;
@@ -32,16 +35,24 @@ class LoginController {
   constructor() {
     this.validateEmail = validateEmailInfo;
     this.validatePassword = validatePasswordInfo;
+    this.Token = TokenService;
     this.secret = fs.readFileSync('./jwt.evaluation.key', 'utf-8');
     this.jwt = jwtImport;
     this.algorithm = 'HS256';
   }
 
+  async tokenValidation(req: Request, res: Response) {
+    const { authorization: token } = req.headers;
+    const { Token } = this;
+    const validation = await Token.validation(token);
+    if (validation.status !== 200) return res.status(validation.status).json(validation.message);
+    return res.status(validation.status).json(validation.user?.role);
+  }
+
   async login(req: Request, res: Response) {
     const { email, password }: UserInfo = req.body;
     const { jwt, secret, algorithm } = this;
-    const userData: Users = await Users
-      .findOne({ where: { email, password } }) as Users;
+    const userData: Users = await findOneUser({ email, password }) as Users;
     if (userData === null) {
       return res.status(401).json(emailInvalid);
     }

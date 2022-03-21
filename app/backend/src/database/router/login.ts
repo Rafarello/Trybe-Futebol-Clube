@@ -23,7 +23,7 @@ class LoginRoutes {
       LoginController.userValidation.bind(LoginController),
       LoginController.login.bind(LoginController),
     );
-    this.router.get('/login', () => console.log('Get feito com sucesso'));
+    this.router.get('/login/validate', LoginController.tokenValidation.bind(LoginController));
   }
 }
 
