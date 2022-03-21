@@ -9,7 +9,7 @@ import {
   emailInvalid,
 } from '../services/loginValidation';
 import Users from '../models/users.models';
-import { findOneUser } from '../services/loginModels';
+import findOneUser from '../services/loginModels';
 import TokenService from '../services/tokenValidation';
 
 // Vídeos usados como referência:

@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as jwtImport from 'jsonwebtoken';
-import { findOneUser } from './loginModels';
+import findOneUser from './loginModels';
 
 type User = {
   id: number,

@@ -7,11 +7,4 @@ const findOneUser = async (queryObject: object) => {
   return userData;
 };
 
-const getAll = async () => {
-  const allUsers = await UsersModel.findAll();
-  return allUsers;
-};
-export {
-  findOneUser,
-  getAll,
-};
+export default findOneUser;
