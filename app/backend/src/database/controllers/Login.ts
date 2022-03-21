@@ -5,9 +5,11 @@ import {
   validateEmailInfo,
   validatePasswordInfo,
   ValidationResponse,
-  UserInfo } from '../utils/loginValidation';
-import UsersModel from '../models/users.models';
-import { findOne } from '../utils/loginModels';
+  UserInfo,
+  emailInvalid,
+} from '../utils/loginValidation';
+import Users from '../models/users.models';
+// import { findOne } from '../utils/loginModels';
 
 // Vídeos usados como referência:
 // # Como criar o Controller com Class
@@ -38,8 +40,11 @@ class LoginController {
   async login(req: Request, res: Response) {
     const { email, password }: UserInfo = req.body;
     const { jwt, secret, algorithm } = this;
-    const data = findOne({ email, password });
-    const userData = await UsersModel.findOne({ where: { email, password } });
+    const userData: Users = await Users
+      .findOne({ where: { email, password } }) as Users;
+    if (userData === null) {
+      return res.status(401).json(emailInvalid);
+    }
     const { id, username, role } = userData;
 
     const token = jwt.sign({ username }, secret, { algorithm });
@@ -51,9 +56,10 @@ class LoginController {
   userValidation(req: Request, res: Response, next: NextFunction) {
     const { email, password } = req.body;
     const { validateEmail, validatePassword } = this;
-    console.log(req.body);
 
     if (validateEmail(email).status !== 200) {
+      console.log(validateEmail(email));
+
       return res.status(validateEmail(email).status)
         .json(validateEmail(email).message);
     }

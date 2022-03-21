@@ -8,7 +8,7 @@ export type UserInfo = {
 
 // # Mensagens de Erro:
 
-const emailInvalid = {
+export const emailInvalid = {
   message: 'Incorrect email or password',
 };
 const passwordInvalid = {
@@ -35,11 +35,11 @@ const validateEmail = (email: string) => {
   const re = /\S+@\S+\.\S+/;
 
   if (typeof email !== 'string') return false;
-  if (re.test(email)) return false;
+  if (!re.test(email)) return false;
   return true;
 };
 
-const passwordExists = (password: string | unknown) => {
+const passwordExists = (password: string | undefined) => {
   if (password === undefined) return false;
   return true;
 };
