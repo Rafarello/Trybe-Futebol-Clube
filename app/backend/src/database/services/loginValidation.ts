@@ -1,11 +1,10 @@
-
 // Código reaproveitado de um projeto anterior;
 
 // # Tipagem de retorno
 
 export type ValidationResponse = { status: number, message?: { message: string } };
 export type UserInfo = {
-  id?: number, username?: string, role?: string, email?: string, password?: string };
+  id?: number, username?: string, role?: string, email: string, password: string };
 
 // # Mensagens de Erro:
 

@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import * as fs from 'fs';
 import * as jwtImport from 'jsonwebtoken';
+import bcrypt = require('bcryptjs');
 import {
   validateEmailInfo,
   validatePasswordInfo,
@@ -52,10 +53,15 @@ class LoginController {
   async login(req: Request, res: Response) {
     const { email, password }: UserInfo = req.body;
     const { jwt, secret, algorithm } = this;
-    const userData: Users = await findOneUser({ email, password }) as Users;
-    if (userData === null) {
+
+    const userData: Users = await findOneUser({ email }) as Users;
+    // Se for incorreto, irá retornar verdadeiro
+    const passwordIncorrect = !bcrypt.compareSync(password, userData.password);
+
+    if (userData === null || passwordIncorrect) {
       return res.status(401).json(emailInvalid);
     }
+
     const { id, username, role } = userData;
 
     const token = jwt.sign({ username }, secret, { algorithm });
