@@ -1,5 +1,6 @@
 import * as express from 'express';
 import LoginRoutes from './database/router/login';
+import ClubsRoutes from './database/router/clubs';
 
 class App {
   public app: express.Express;
@@ -10,6 +11,7 @@ class App {
     this.config();
     this.app.use(express.json());
     this.app.use(LoginRoutes);
+    this.app.use(ClubsRoutes);
   }
 
   private config():void {
