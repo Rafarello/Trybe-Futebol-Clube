@@ -33,7 +33,7 @@ const validateEmail = (email: string) => {
   return true;
 };
 
-const passwordExists = (password: string | undefined) => {
+const passwordExists = (password: string | unknown) => {
   if (password === undefined) return false;
   return true;
 };

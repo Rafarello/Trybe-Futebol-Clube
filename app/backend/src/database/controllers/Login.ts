@@ -72,17 +72,17 @@ class LoginController {
 
   userValidation(req: Request, res: Response, next: NextFunction) {
     const { email, password } = req.body;
-    const responseForExistance = this.existanceValidation(email, password);
-    const responseForValidation = this.infoValidation(email, password);
+    const { existanceValidation, infoValidation } = this;
+    console.log(this);
 
-    if (responseForExistance.status !== 200) {
-      return res.status(responseForExistance.status)
-        .json(responseForExistance.message);
+    if (existanceValidation(email, password).status !== 200) {
+      return res.status(existanceValidation(email, password).status)
+        .json(existanceValidation(email, password).message);
     }
 
-    if (responseForValidation.status !== 200) {
-      return res.status(responseForValidation.status)
-        .json(responseForValidation.message);
+    if (infoValidation(email, password).status !== 200) {
+      return res.status(infoValidation(email, password).status)
+        .json(infoValidation(email, password).message);
     }
     next();
   }
