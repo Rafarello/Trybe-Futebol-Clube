@@ -27,6 +27,7 @@ Matchs.init({
 // https://sequelize.org/master/manual/assocs.html
 Matchs.hasMany(Clubs, { foreignKey: 'id', as: 'home_team' });
 Matchs.hasMany(Clubs, { foreignKey: 'id', as: 'away_team' });
-Clubs.belongsTo(Matchs);
+Clubs.belongsTo(Matchs, { foreignKey: 'id', as: 'home_team' });
+Clubs.belongsTo(Matchs, { foreignKey: 'id', as: 'away_team' });
 
 export default Matchs;
