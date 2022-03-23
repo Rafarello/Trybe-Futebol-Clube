@@ -1,3 +1,4 @@
+
 // Código reaproveitado de um projeto anterior;
 
 // # Tipagem de retorno

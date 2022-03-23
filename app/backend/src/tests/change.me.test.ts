@@ -49,7 +49,7 @@ describe('Desenvolva o endpoint /login no backend de maneira que ele permita o a
 
   //   expect(...)
   // });
-  it('Será validado que é possível fazer login com sucesso com as informações corretas', async () => {
+  it('Será validado que é possível fazer login com sucesso com as informações corretas', (done) => {
     const body = { email: 'email@email.com', password: '123456' };
     chai.request(app)
       .post('/login')
@@ -58,29 +58,31 @@ describe('Desenvolva o endpoint /login no backend de maneira que ele permita o a
         res.should.have.status(200);
         res.body.should.be.a('object');
         res.body.should.have.property('user', 'token');
+        done();
       });
+      
   });
 
 });
 
 describe('Desenvolva o endpoint /login no backend de maneira que ele NÃO permita o acesso com dados inválidos no frontend', () => {
 
-  it('Retornará erro se o email for inválido', async () => {
+  it('Retornará erro se o email for inválido',  (done) => {
     const body = { email: 'wrongemail', password: '123456' };
     chai.request(app)
       .post('/login')
       .send(body)
       .end((_err, res) => {
         res.should.have.status(401);
-        console.log(res);
-        
+
         res.body.should.be.a('object');
         res.body.should.have.property('message');
         res.body.should.have.property('message').equal('Incorrect email or password');
+        done();
       });
   });
 
-  it('Retornará erro se o email não for string', async () => {
+  it('Retornará erro se o email não for string',  (done) => {
     const body = { email: 123456, password: '123456' };
     chai.request(app)
       .post('/login')
@@ -90,10 +92,11 @@ describe('Desenvolva o endpoint /login no backend de maneira que ele NÃO permit
         res.body.should.be.a('object');
         res.body.should.have.property('message');
         res.body.should.have.property('message').equal('Incorrect email or password');
+        done();
       });
   });
 
-  it('Retornará erro se o password for inválido', async () => {
+  it('Retornará erro se o password for inválido', (done) => {
     const body = { email: 'email@email.com', password: '123' };
     chai.request(app)
       .post('/login')
@@ -103,11 +106,12 @@ describe('Desenvolva o endpoint /login no backend de maneira que ele NÃO permit
         res.body.should.be.a('object');
         res.body.should.have.property('message');
         res.body.should.have.property('message').equal('Incorrect email or password');
+        done();
       });
 
   });
 
-  it('Retornará erro se o password não for string', async () => {
+  it('Retornará erro se o password não for string', (done) => {
     const body = { email: 'email@email.com', password: 123456 };
     chai.request(app)
       .post('/login')
@@ -117,13 +121,14 @@ describe('Desenvolva o endpoint /login no backend de maneira que ele NÃO permit
         res.body.should.be.a('object');
         res.body.should.have.property('message');
         res.body.should.have.property('message').equal('Incorrect email or password');
+        done();
       });
   });
 });
 
 describe('Desenvolva o endpoint /login no backend de maneira que ele NÃO permita o acesso com dados faltantes no frontend', () => {
 
-  it('Será validado que o campo "email" se encontra no corpo da requisição', async () => {
+  it('Será validado que o campo "email" se encontra no corpo da requisição', (done) => {
     const body = { email: undefined, password: '123456' };
     chai.request(app)
       .post('/login')
@@ -133,10 +138,11 @@ describe('Desenvolva o endpoint /login no backend de maneira que ele NÃO permit
         res.body.should.be.a('object');
         res.body.should.have.property('message');
         res.body.should.have.property('message').equal('All fields must be filled');
+        done();
       });
   });
 
-  it('Será validado que o campo "password" se encontra no corpo da requisição', async () => {
+  it('Será validado que o campo "password" se encontra no corpo da requisição', (done) => {
     const body = { email: 'email@email.com', password: undefined };
     chai.request(app)
       .post('/login')
@@ -146,39 +152,54 @@ describe('Desenvolva o endpoint /login no backend de maneira que ele NÃO permit
         res.body.should.be.a('object');
         res.body.should.have.property('message');
         res.body.should.have.property('message').equal('All fields must be filled');
+        done();
       });
   });
 });
 
-describe('Desenvolva o endpoint /login/validate no back-end de maneira ele retorne os dados corretamente no front-end', ()=> {
-  it('Será validado que é possível retornar a "role" do usuário com um token válido', () => {
+describe('Desenvolva o endpoint /login/validate no back-end de maneira ele retorne os dados corretamente no front-end', () => {
+  it('Será validado que é possível retornar a "role" do usuário com um token válido', (done) => {
+    const body = { email: 'email@email.com', password: '123456' };
     chai.request(app)
-    .get('/login/validate')
-    .set('authorization', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFkbWluIiwiaWF0IjoxNjQ3ODk5NDMzfQ.jMkrwKAxW0TU8fmjW03yIKGDpR0Id06yqzPsDpQbGSU')
-    .end((_err, res) => {
-      res.should.have.status(200);
-      res.body.should.be.a('string')
-      res.body.should.be.equal('admin')
-    });
+      .post('/login')
+      .send(body)
+      .end((_err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        res.body.should.have.property('user', 'token');
+        const token = res.body.token
+        chai.request(app)
+          .get('/login/validate')
+          .set('Authorization', token)
+          .end((_err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a('string');
+            res.body.should.be.equal('admin');
+          });
+          done();
+      });
+
   });
-  it('Será validado que não é possível fazer a requisição com um token inválido', () => {
+  it('Será validado que não é possível fazer a requisição com um token inválido', (done) => {
     chai.request(app)
-    .get('/login/validate')
-    .set('authorization', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFkbWluIiwiaWF0IjoxNjQ3ODk5NDMzfQ')
-    .end((_err, res) => {
-      res.should.have.status(401);
-      res.body.should.be.a('string')
-      res.body.should.be.equal('Invalid Token')
-    });
+      .get('/login/validate')
+      .set('Authorization', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFkbWluIiwiaWF0IjoxNjQ3ODk5NDMzfQ')
+      .end((_err, res) => {
+        res.should.have.status(401);
+        res.body.should.be.a('string')
+        res.body.should.be.equal('Invalid Token')
+        done();
+      });
   });
-  it('Será validado que não é possível fazer a requisição com um token inválido', () => {
+  it('Será validado que não é possível fazer a requisição com um token inválido', (done) => {
     chai.request(app)
-    .get('/login/validate')
-    .set('authorization', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtkF0IjoxNjQ3ODk5NDMzfQ.jMkrwKAxW0TU8fmjW03yIKGDpR0Id06yqzPsDpQbGSU')
-    .end((_err, res) => {
-      res.should.have.status(200);
-      res.body.should.be.a('string')
-      res.body.should.be.equal('Invalid Token')
-    });
+      .get('/login/validate')
+      .set('Authorization', '123.456.789')
+      .end((_err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('string')
+        res.body.should.be.equal('Invalid Token')
+        done();
+      });
   });
 });
