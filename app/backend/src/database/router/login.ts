@@ -20,7 +20,7 @@ class LoginRoutes {
   loadRoutes() {
     this.router.post(
       '/login',
-      LoginController.userValidation.bind(LoginController),
+      LoginController.userValidation,
       LoginController.login.bind(LoginController),
     );
     this.router.get('/login/validate', LoginController.tokenValidation.bind(LoginController));

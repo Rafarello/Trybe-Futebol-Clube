@@ -8,17 +8,11 @@ export type UserInfo = {
 
 // # Mensagens de Erro:
 
-export const emailInvalid = {
+export const invalidInfo = {
   message: 'Incorrect email or password',
-};
-const passwordInvalid = {
-  message: 'Incorrect email or password',
-};
-const passwordRequired = {
-  message: 'All fields must be filled',
 };
 
-const emailRequired = {
+const infoRequired = {
   message: 'All fields must be filled',
 };
 
@@ -51,34 +45,24 @@ const validatePassword = (password: string) => {
   return true;
 };
 
-export const validateEmailInfo = (email: string) => {
-  if (!emailExists(email)) {
+export const validateExistance = (email: string, password: string) => {
+  if (!emailExists(email) || !passwordExists(password)) {
     return {
       status: 401,
-      message: emailRequired,
+      message: infoRequired,
     };
   }
-  if (!validateEmail(email)) {
-    return {
-      status: 401,
-      message: emailInvalid,
-    };
-  }
+
   return { status: 200 };
 };
 
-export const validatePasswordInfo = (password: string) => {
-  if (!passwordExists(password)) {
+export const validateLoginInfo = (email: string, password: string) => {
+  if (!validateEmail(email) || !validatePassword(password)) {
     return {
       status: 401,
-      message: passwordRequired,
+      message: invalidInfo,
     };
   }
-  if (!validatePassword(password)) {
-    return {
-      status: 401,
-      message: passwordInvalid,
-    };
-  }
+
   return { status: 200 };
 };

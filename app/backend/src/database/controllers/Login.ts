@@ -3,11 +3,11 @@ import * as fs from 'fs';
 import * as jwtImport from 'jsonwebtoken';
 import bcrypt = require('bcryptjs');
 import {
-  validateEmailInfo,
-  validatePasswordInfo,
+  validateExistance,
+  validateLoginInfo,
   ValidationResponse,
   UserInfo,
-  emailInvalid,
+  invalidInfo,
 } from '../services/loginValidation';
 import Users from '../models/users.models';
 import findOneUser from '../services/loginModels';
@@ -21,9 +21,9 @@ import TokenService from '../services/tokenValidation';
 // https://www.npmjs.com/package/jsonwebtoken
 
 class LoginController {
-  validateEmail: (email: string) => ValidationResponse;
+  existanceValidation: (email: string, password: string) => ValidationResponse;
 
-  validatePassword: (password: string) => ValidationResponse;
+  infoValidation: (email: string, password: string) => ValidationResponse;
 
   Token;
 
@@ -34,8 +34,8 @@ class LoginController {
   algorithm:jwtImport.Algorithm;
 
   constructor() {
-    this.validateEmail = validateEmailInfo;
-    this.validatePassword = validatePasswordInfo;
+    this.existanceValidation = validateExistance;
+    this.infoValidation = validateLoginInfo;
     this.Token = TokenService;
     this.secret = fs.readFileSync('./jwt.evaluation.key', 'utf-8');
     this.jwt = jwtImport;
@@ -59,7 +59,7 @@ class LoginController {
     const passwordIncorrect = !bcrypt.compareSync(password, userData.password);
 
     if (userData === null || passwordIncorrect) {
-      return res.status(401).json(emailInvalid);
+      return res.status(401).json(invalidInfo);
     }
 
     const { id, username, role } = userData;
@@ -72,18 +72,17 @@ class LoginController {
 
   userValidation(req: Request, res: Response, next: NextFunction) {
     const { email, password } = req.body;
-    const { validateEmail, validatePassword } = this;
+    const responseForExistance = this.existanceValidation(email, password);
+    const responseForValidation = this.infoValidation(email, password);
 
-    if (validateEmail(email).status !== 200) {
-      console.log(validateEmail(email));
-
-      return res.status(validateEmail(email).status)
-        .json(validateEmail(email).message);
+    if (responseForExistance.status !== 200) {
+      return res.status(responseForExistance.status)
+        .json(responseForExistance.message);
     }
 
-    if (validatePassword(password).status !== 200) {
-      return res.status(validatePassword(password).status)
-        .json(validatePassword(password).message);
+    if (responseForValidation.status !== 200) {
+      return res.status(responseForValidation.status)
+        .json(responseForValidation.message);
     }
     next();
   }
