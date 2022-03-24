@@ -2,7 +2,9 @@ import { Request, Response } from 'express';
 import MatchsServices from '../services/matchsServices';
 
 class MatchsController {
-  public static async getAll(_req: Request, res: Response) {
+  public static async getAll(req: Request, res: Response) {
+    const { query } = req.query;
+    console.log(query);
     const allClubs = await MatchsServices.getAll();
     return res.status(200).json(allClubs);
   }
