@@ -18,8 +18,9 @@ const infoRequired = {
 
 // # Funções úteis:
 
-const emailExists = (email: string | unknown) => {
+const emailExists = (email: string) => {
   if (email === undefined) return false;
+  if (email.length === 0) return false;
   return true;
 };
 
@@ -33,8 +34,9 @@ const validateEmail = (email: string) => {
   return true;
 };
 
-const passwordExists = (password: string | unknown) => {
+const passwordExists = (password: string) => {
   if (password === undefined) return false;
+  if (password.length === 0) return false;
   return true;
 };
 
