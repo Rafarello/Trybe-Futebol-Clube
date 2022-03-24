@@ -6,12 +6,34 @@ module.exports = {
     await queryInterface.createTable(
       'matchs',
       {
-        id: { primaryKey: true, autoIncrement: true, type: Sequelize.INTEGER },
-        homeTeam: { references: { model: { tableName: 'clubs' }, key: 'id' }, type: Sequelize.INTEGER, field: 'home_team' },
-        homeTeamGoals: { type: Sequelize.INTEGER, field: 'home_team_goals' },
-        awayTeam: { references: { model: { tableName: 'clubs' }, key: 'id' }, type: Sequelize.INTEGER, field: 'away_team' },
-        awayTeamGoals: { type: Sequelize.INTEGER, field: 'away_team_goals' },
-        inProgress: { type: Sequelize.BOOLEAN, field: 'in_progress' },
+        id: {
+          primaryKey: true,
+          autoIncrement: true,
+          type: Sequelize.INTEGER
+        },
+        homeTeam: {
+          references: { model: 'clubs', key: 'id' },
+          type: Sequelize.INTEGER, field: 'home_team',
+          onUpdate: 'CASCADE',
+          onDelete: 'CASCADE',
+        },
+        homeTeamGoals: {
+          type: Sequelize.INTEGER,
+          field: 'home_team_goals'
+        },
+        awayTeam: {
+          references: { model: 'clubs', key: 'id' },
+          type: Sequelize.INTEGER, field: 'away_team',
+          onUpdate: 'CASCADE',
+          onDelete: 'CASCADE',
+        },
+        awayTeamGoals: {
+          type: Sequelize.INTEGER,
+          field: 'away_team_goals'
+        },
+        inProgress: {
+          type: Sequelize.BOOLEAN, field: 'in_progress'
+        },
       },
       {},
     );

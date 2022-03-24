@@ -6,22 +6,19 @@ class MatchsServices {
     // Código abaixo visto em:
     // https://stackoverflow.com/questions/46380563/get-only-datavalues-from-sequelize-orm
     const allMatches = await MatchsModel.findAll({
-      raw: true,
       include: [
         {
           model: Clubs,
-          required: true,
-          as: 'homeTeam',
+          as: 'homeClub',
+          attributes: ['clubName'],
         },
         {
           model: Clubs,
-          required: true,
-          as: 'awayTeam',
+          as: 'awayClub',
+          attributes: ['clubName'],
         },
       ],
     });
-    console.log(allMatches);
-
     return allMatches;
   }
 
