@@ -21,6 +21,7 @@ class MatchsRouter {
     this.router.get('/matchs', MatchsController.getAll);
     this.router.post('/matchs', MatchsController.validateMatchInfo, MatchsController.newMatch);
     this.router.patch('/matchs/:id/finish', MatchsController.updateProgress);
+    this.router.patch('/matchs/:id', MatchsController.updateMatchResult);
   }
 }
 

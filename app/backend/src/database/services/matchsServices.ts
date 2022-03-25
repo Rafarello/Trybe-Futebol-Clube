@@ -79,6 +79,15 @@ class MatchsServices {
       { where: { id } },
     );
   }
+
+  public static async updateMatchResult(body: Match, id: string) {
+    const { homeTeamGoals, awayTeamGoals } = body;
+    const response = await MatchsModel.update(
+      { homeTeamGoals, awayTeamGoals },
+      { where: { id } },
+    );
+    console.log(response);
+  }
 }
 
 export default MatchsServices;

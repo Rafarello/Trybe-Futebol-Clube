@@ -36,6 +36,13 @@ class MatchsController {
 
     return res.status(200).send();
   }
+
+  public static async updateMatchResult(req: Request, res: Response) {
+    const { body } = req;
+    const { id } = req.params;
+    await MatchsServices.updateMatchResult(body, id);
+    return res.status(200).send();
+  }
 }
 
 export default MatchsController;
