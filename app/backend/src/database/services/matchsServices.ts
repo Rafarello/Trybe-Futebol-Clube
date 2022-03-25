@@ -1,5 +1,8 @@
+import * as fs from 'fs';
+import * as jwtImport from 'jsonwebtoken';
 import ClubsModel from '../models/clubs.model';
 import MatchsModel from '../models/matches.model';
+import findOneUser from './loginModels';
 
 type Match = {
   homeTeam?: number,
@@ -8,6 +11,21 @@ type Match = {
   awayTeamGoals?: number,
   inProgress?: boolean | number,
 };
+
+const secret = fs.readFileSync('./jwt.evaluation.key', 'utf-8');
+const UNAUTHORIZED = 401;
+const INVALID_TOKEN = 'Invalid Token';
+const TOKEN_NOT_FOUND = 'Token not found';
+const OK = 200;
+
+type User = {
+  id: number,
+  username: string,
+  role: string,
+  email: string,
+  password: string
+};
+type UserResponse = User | Record<string, never>;
 
 class MatchsServices {
   public static async getAll() {
@@ -58,7 +76,6 @@ class MatchsServices {
 
   public static async validateMatchInfo(body: Match) {
     const { homeTeam, awayTeam } = body;
-    const UNAUTHORIZED = 401;
     const homeTeamExists = await ClubsModel.count({ where: { id: homeTeam } });
     const awayTeamExists = await ClubsModel.count({ where: { id: awayTeam } });
     if ((homeTeamExists || awayTeamExists) === 0) {
@@ -82,11 +99,32 @@ class MatchsServices {
 
   public static async updateMatchResult(body: Match, id: string) {
     const { homeTeamGoals, awayTeamGoals } = body;
-    const response = await MatchsModel.update(
-      { homeTeamGoals, awayTeamGoals },
-      { where: { id } },
-    );
-    console.log(response);
+    if (homeTeamGoals && awayTeamGoals) {
+      await MatchsModel.update(
+        { homeTeamGoals, awayTeamGoals },
+        { where: { id } },
+      );
+    }
+  }
+
+  public static async tokenValidation(token: string | undefined) {
+    if (!token) return { status: UNAUTHORIZED, message: TOKEN_NOT_FOUND };
+    const test = token.split('.');
+    if (test.length !== 3) return { status: UNAUTHORIZED, message: INVALID_TOKEN };
+    let user: UserResponse;
+    try {
+      const decoded = jwtImport.verify(token, secret);
+      const [username] = Object.values(decoded);
+      const query = { username };
+      user = await findOneUser(query) as UserResponse;
+      if (!user) {
+        return { status: UNAUTHORIZED, message: INVALID_TOKEN };
+      }
+    } catch (error) {
+      console.log(error);
+      return { status: UNAUTHORIZED, message: INVALID_TOKEN };
+    }
+    return { status: OK, user };
   }
 }
 

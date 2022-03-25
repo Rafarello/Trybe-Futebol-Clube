@@ -1,4 +1,5 @@
 import * as express from 'express';
+import * as cors from 'cors';
 import LoginRoutes from './database/router/login';
 import ClubsRoutes from './database/router/clubs';
 import MatchsRouter from './database/router/matchs';
@@ -25,6 +26,7 @@ class App {
     };
 
     this.app.use(accessControl);
+    this.app.use(cors());
     this.app.get('/', (_request, response) => {
       response.send();
     });
