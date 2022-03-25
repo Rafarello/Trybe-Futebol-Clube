@@ -57,11 +57,10 @@ class MatchsServices {
   }
 
   public static async updateProgress(id: string) {
-    const updatedMatch = await MatchsModel.update(
+    await MatchsModel.update(
       { inProgress: 0 },
       { where: { id } },
     );
-    return updatedMatch;
   }
 }
 

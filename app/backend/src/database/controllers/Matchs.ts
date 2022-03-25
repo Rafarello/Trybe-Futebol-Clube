@@ -15,6 +15,13 @@ class MatchsController {
 
   public static async newMatch(req:Request, res: Response) {
     const { body } = req;
+    const { homeTeam, awayTeam } = body;
+    const UNAUTHORIZED = 401;
+    const message = 'It is not possible to create a match with two equal teams';
+    if (homeTeam === awayTeam) {
+      return res.status(UNAUTHORIZED)
+        .json({ message });
+    }
     const newMatch = await MatchsServices.newMatch(body);
     return res.status(200).json(newMatch);
   }

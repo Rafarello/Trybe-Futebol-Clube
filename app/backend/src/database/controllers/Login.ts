@@ -56,7 +56,7 @@ class LoginController {
 
     const userData: Users = await findOneUser({ email }) as Users;
     // Se for incorreto, irá retornar verdadeiro
-    const passwordIncorrect = !bcrypt.compareSync(password, userData.password);
+    const passwordIncorrect = !bcrypt.compareSync(password as string, userData.password);
 
     if (userData === null || passwordIncorrect) {
       return res.status(401).json(invalidInfo);
@@ -65,7 +65,7 @@ class LoginController {
     const { id, username, role } = userData;
 
     const token = jwt.sign({ username }, secret, { algorithm });
-    const user: UserInfo = { id, username, role, email, password };
+    const user: UserInfo = { id, username, role, email };
     const response = { user, token };
     return res.status(200).json(response);
   }
