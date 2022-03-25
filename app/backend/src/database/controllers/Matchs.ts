@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import MatchsServices from '../services/matchsServices';
 
 class MatchsController {
@@ -13,15 +13,19 @@ class MatchsController {
     return res.status(200).json(allClubs);
   }
 
+  public static async validateMatchInfo(req:Request, res: Response, next: NextFunction) {
+    const { body } = req;
+    const validation = await MatchsServices.validateMatchInfo(body);
+    if (validation !== undefined) {
+      const { status, message } = validation;
+      return res.status(status).json({ message });
+    }
+    next();
+  }
+
   public static async newMatch(req:Request, res: Response) {
     const { body } = req;
-    const { homeTeam, awayTeam } = body;
-    const UNAUTHORIZED = 401;
-    const message = 'It is not possible to create a match with two equal teams';
-    if (homeTeam === awayTeam) {
-      return res.status(UNAUTHORIZED)
-        .json({ message });
-    }
+
     const newMatch = await MatchsServices.newMatch(body);
     return res.status(200).json(newMatch);
   }
