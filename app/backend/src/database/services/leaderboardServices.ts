@@ -120,7 +120,6 @@ class LeaderboardServices {
       // # Código abaixo visto em:
       // https://www.cloudhadoop.com/2020/02/different-ways-of-remove-property-in.html
       const { id, ...clubObject } = club;
-      console.log(clubObject);
 
       return clubObject;
     });
@@ -130,7 +129,6 @@ class LeaderboardServices {
   public static async generateLeaderboardHome() {
     const table = await this.generateTable();
     const allMatchs = await MatchsModel.findAll({ raw: true, where: { inProgress: false } });
-    console.log(allMatchs);
 
     const leaderboardHome = table.map((club) => {
       allMatchs.forEach((match) => {
