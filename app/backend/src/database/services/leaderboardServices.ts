@@ -37,14 +37,14 @@ class LeaderboardServices {
     return generateTable;
   }
 
-  public static async generateWin(match: MatchsModel, club: ClubTable) {
+  public static async generateWin(match: MatchsModel, club: ClubTable, status: 'home' | 'away') {
     const results = club;
     const { homeTeamGoals, awayTeamGoals } = match;
     results.totalGames += 1;
     results.totalVictories += 1;
     results.totalPoints += 3;
-    results.goalsFavor += homeTeamGoals;
-    results.goalsOwn += awayTeamGoals;
+    results.goalsFavor += status === 'home' ? homeTeamGoals : awayTeamGoals;
+    results.goalsOwn += status === 'home' ? awayTeamGoals : homeTeamGoals;
     results.goalsBalance = results.goalsFavor - results.goalsOwn;
     results.efficiency = Number(
       ((results.totalPoints / (results.totalGames * 3)) * 100).toFixed(2),
@@ -52,14 +52,14 @@ class LeaderboardServices {
     return results;
   }
 
-  public static async generateDraw(match: MatchsModel, club: ClubTable) {
+  public static async generateDraw(match: MatchsModel, club: ClubTable, status: 'home' | 'away') {
     const results = club;
     const { homeTeamGoals, awayTeamGoals } = match;
     results.totalGames += 1;
     results.totalDraws += 1;
     results.totalPoints += 1;
-    results.goalsFavor += homeTeamGoals;
-    results.goalsOwn += awayTeamGoals;
+    results.goalsFavor += status === 'home' ? homeTeamGoals : awayTeamGoals;
+    results.goalsOwn += status === 'home' ? awayTeamGoals : homeTeamGoals;
     results.goalsBalance = results.goalsFavor - results.goalsOwn;
     results.efficiency = Number(
       ((results.totalPoints / (results.totalGames * 3)) * 100).toFixed(2),
@@ -67,13 +67,13 @@ class LeaderboardServices {
     return results;
   }
 
-  public static async generateLoss(match: MatchsModel, club: ClubTable) {
+  public static async generateLoss(match: MatchsModel, club: ClubTable, status: 'home' | 'away') {
     const results = club;
     const { homeTeamGoals, awayTeamGoals } = match;
     results.totalGames += 1;
     results.totalLosses += 1;
-    results.goalsFavor += homeTeamGoals;
-    results.goalsOwn += awayTeamGoals;
+    results.goalsFavor += status === 'home' ? homeTeamGoals : awayTeamGoals;
+    results.goalsOwn += status === 'home' ? awayTeamGoals : homeTeamGoals;
     results.goalsBalance = results.goalsFavor - results.goalsOwn;
     results.efficiency = Number(
       ((results.totalPoints / (results.totalGames * 3)) * 100).toFixed(2),
@@ -83,24 +83,26 @@ class LeaderboardServices {
 
   public static async updateTableHome(match: MatchsModel, club: ClubTable) {
     const { homeTeamGoals, awayTeamGoals } = match;
+    const HOME = 'home';
     if (homeTeamGoals > awayTeamGoals) {
-      return this.generateWin(match, club);
+      return this.generateWin(match, club, HOME);
     }
     if (homeTeamGoals === awayTeamGoals) {
-      return this.generateDraw(match, club);
+      return this.generateDraw(match, club, HOME);
     }
-    return this.generateLoss(match, club);
+    return this.generateLoss(match, club, HOME);
   }
 
   public static async updateTableAway(match: MatchsModel, club: ClubTable) {
     const { homeTeamGoals, awayTeamGoals } = match;
+    const AWAY = 'away';
     if (homeTeamGoals < awayTeamGoals) {
-      return this.generateWin(match, club);
+      return this.generateWin(match, club, AWAY);
     }
     if (homeTeamGoals === awayTeamGoals) {
-      return this.generateDraw(match, club);
+      return this.generateDraw(match, club, AWAY);
     }
-    return this.generateLoss(match, club);
+    return this.generateLoss(match, club, AWAY);
   }
 
   // # Código da função abaixo, visto em:
