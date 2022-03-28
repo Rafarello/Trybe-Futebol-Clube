@@ -6,6 +6,15 @@ import Clubs from './clubs.model';
 
 class Matchs extends Model {
   // public <campo>!: <tipo>;
+  public homeTeam: number;
+
+  public homeTeamGoals: number;
+
+  public awayTeam: number;
+
+  public awayTeamGoals: number;
+
+  public inProgress: boolean;
 }
 
 Matchs.init({
@@ -13,7 +22,7 @@ Matchs.init({
   homeTeamGoals: DataTypes.INTEGER,
   awayTeam: DataTypes.INTEGER,
   awayTeamGoals: DataTypes.INTEGER,
-  inProgress: DataTypes.TINYINT,
+  inProgress: DataTypes.BOOLEAN,
 }, {
   // ... Outras configs
   underscored: true,
