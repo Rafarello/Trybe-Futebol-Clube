@@ -129,7 +129,9 @@ class LeaderboardServices {
 
   public static async generateLeaderboardHome() {
     const table = await this.generateTable();
-    const allMatchs = await MatchsModel.findAll({ raw: true });
+    const allMatchs = await MatchsModel.findAll({ raw: true, where: { inProgress: false } });
+    console.log(allMatchs);
+
     const leaderboardHome = table.map((club) => {
       allMatchs.forEach((match) => {
         if (match.homeTeam === club.id) this.updateTableHome(match, club as ClubTable);
@@ -142,7 +144,7 @@ class LeaderboardServices {
 
   public static async generateLeaderboardAway() {
     const table = await this.generateTable();
-    const allMatchs = await MatchsModel.findAll({ raw: true });
+    const allMatchs = await MatchsModel.findAll({ raw: true, where: { inProgress: false } });
     const leaderboardAway = table.map((club) => {
       allMatchs.forEach((match) => {
         if (match.awayTeam === club.id) this.updateTableAway(match, club as ClubTable);
