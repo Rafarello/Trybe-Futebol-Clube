@@ -22,9 +22,9 @@ class LeaderboardServices {
       const table = {
         id: club.id,
         name: club.clubName,
+        totalPoints: 0,
         totalGames: 0,
         totalVictories: 0,
-        totalPoints: 0,
         totalDraws: 0,
         totalLosses: 0,
         goalsFavor: 0,
