@@ -143,7 +143,7 @@ class LeaderboardServices {
     const allMatchs = await MatchsModel.findAll({ raw: true });
     const leaderboardAway = table.map((club) => {
       allMatchs.forEach((match) => {
-        if (match.awayTeam === club.id) this.updateTableHome(match, club as ClubTable);
+        if (match.awayTeam === club.id) this.updateTableAway(match, club as ClubTable);
       });
       return club;
     });
