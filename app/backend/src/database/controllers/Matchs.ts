@@ -34,7 +34,7 @@ class MatchsController {
     const { id } = req.params;
     await MatchsServices.updateProgress(id);
 
-    return res.status(200).send();
+    return res.status(200).json({ message: 'OK' });
   }
 
   public static async updateMatchResult(req: Request, _res: Response, next: NextFunction) {
