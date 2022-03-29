@@ -30,12 +30,6 @@ class MatchsController {
     return res.status(201).json(newMatch);
   }
 
-  public static async newMatchFinished(req:Request, res: Response) {
-    const { body } = req;
-    const newMatch = await MatchsServices.newMatchFinished(body);
-    return res.status(201).json(newMatch);
-  }
-
   public static async updateProgress(req: Request, res: Response) {
     const { id } = req.params;
     await MatchsServices.updateProgress(id);

@@ -76,13 +76,6 @@ class MatchsServices {
     return response;
   }
 
-  public static async newMatchFinished(body: Match) {
-    const match = { ...body, inProgress: false };
-    const response = await MatchsModel.create(match);
-
-    return response;
-  }
-
   public static async validateMatchInfo(body: Match) {
     const { homeTeam, awayTeam } = body;
     const clubsCount = await ClubsModel.count({ where: { [Op.or]: [

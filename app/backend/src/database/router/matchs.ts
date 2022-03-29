@@ -27,7 +27,7 @@ class MatchsRouter {
 
       MatchsController.newMatch,
     );
-    this.router.patch('/matchs/:id/finish', MatchsController.newMatchFinished);
+    this.router.patch('/matchs/:id/finish', MatchsController.updateProgress);
     this.router.patch(
       '/matchs/:id',
       MatchsController.updateMatchResult,
