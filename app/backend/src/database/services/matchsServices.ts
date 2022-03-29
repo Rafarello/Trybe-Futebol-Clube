@@ -78,13 +78,13 @@ class MatchsServices {
     const { homeTeam, awayTeam } = body;
     const homeTeamExists = await ClubsModel.count({ where: { id: homeTeam } });
     const awayTeamExists = await ClubsModel.count({ where: { id: awayTeam } });
-    if ((homeTeamExists || awayTeamExists) === 0) {
-      const message = 'There is no team with such id!';
+    if (homeTeam === awayTeam) {
+      const message = 'It is not possible to create a match with two equal teams';
       const response = { status: UNAUTHORIZED, message };
       return response;
     }
-    if (homeTeam === awayTeam) {
-      const message = 'It is not possible to create a match with two equal teams';
+    if ((homeTeamExists || awayTeamExists) === 0) {
+      const message = 'There is no team with such id!';
       const response = { status: UNAUTHORIZED, message };
       return response;
     }
