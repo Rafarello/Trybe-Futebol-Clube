@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as jwtImport from 'jsonwebtoken';
+import { Op } from 'sequelize';
 import ClubsModel from '../models/clubs.model';
 import MatchsModel from '../models/matches.model';
 import findOneUser from './loginModels';
@@ -77,14 +78,18 @@ class MatchsServices {
 
   public static async validateMatchInfo(body: Match) {
     const { homeTeam, awayTeam } = body;
-    const homeTeamExists = await ClubsModel.count({ where: { id: homeTeam } });
-    const awayTeamExists = await ClubsModel.count({ where: { id: awayTeam } });
+    const clubsCount = await ClubsModel.count({ where: { [Op.or]: [
+      { id: homeTeam },
+      { id: awayTeam },
+    ] } });
+    console.log(clubsCount);
+
     if (homeTeam === awayTeam) {
       const message = 'It is not possible to create a match with two equal teams';
       const response = { status: UNAUTHORIZED, message };
       return response;
     }
-    if ((homeTeamExists || awayTeamExists) === 0) {
+    if (clubsCount !== 2) {
       const message = 'There is no team with such id!';
       const response = { status: UNAUTHORIZED, message };
       return response;
