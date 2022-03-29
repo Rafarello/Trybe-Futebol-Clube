@@ -76,13 +76,19 @@ class MatchsServices {
     return response;
   }
 
+  public static async newMatchFinished(body: Match) {
+    const match = { ...body, inProgress: false };
+    const response = await MatchsModel.create(match);
+
+    return response;
+  }
+
   public static async validateMatchInfo(body: Match) {
     const { homeTeam, awayTeam } = body;
     const clubsCount = await ClubsModel.count({ where: { [Op.or]: [
       { id: homeTeam },
       { id: awayTeam },
     ] } });
-    console.log(clubsCount);
 
     if (homeTeam === awayTeam) {
       const message = 'It is not possible to create a match with two equal teams';
@@ -105,7 +111,7 @@ class MatchsServices {
 
   public static async updateMatchResult(body: Match, id: string) {
     const { homeTeamGoals, awayTeamGoals } = body;
-    if (homeTeamGoals && awayTeamGoals) {
+    if ((homeTeamGoals && awayTeamGoals) !== undefined) {
       await MatchsModel.update(
         { homeTeamGoals, awayTeamGoals },
         { where: { id } },
