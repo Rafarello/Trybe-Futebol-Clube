@@ -69,7 +69,8 @@ class MatchsServices {
   }
 
   public static async newMatch(body: Match) {
-    const response = await MatchsModel.create(body);
+    const match = { ...body, inProgress: true };
+    const response = await MatchsModel.create(match);
 
     return response;
   }
