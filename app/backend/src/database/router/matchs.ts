@@ -31,8 +31,6 @@ class MatchsRouter {
     this.router.patch(
       '/matchs/:id',
       MatchsController.updateMatchResult,
-
-      MatchsController.updateProgress,
     );
   }
 }
