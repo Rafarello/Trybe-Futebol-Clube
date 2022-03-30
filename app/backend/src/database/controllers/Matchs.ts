@@ -11,6 +11,7 @@ class MatchsController {
       return res.status(201).json(queryMatchs);
     }
     const allClubs = await MatchsServices.getAll();
+
     return res.status(201).json(allClubs);
   }
 

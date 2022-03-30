@@ -1,4 +1,3 @@
-import * as sinon from 'sinon';
 import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 
@@ -9,6 +8,7 @@ import Example from '../database/models/ExampleModel';
 import clubsDatabase from './clubsDatabase';
 import { leaderboardHomeDefault, leaderboardHomeCustom } from './expectedResults/leaderboard_home';
 import { leaderboardAwayDefault, leaderboardAwayCustom } from './expectedResults/leaderboard_away';
+import { leaderboardDefault } from './expectedResults/leaderboard';
 
 chai.use(chaiHttp);
 
@@ -27,9 +27,7 @@ describe('Desenvolva o endpoint /login no backend de maneira que ele permita o a
   /**
    * Exemplo do uso de stubs com tipos
    */
-
   // let chaiHttpResponse: Response;
-
   // before(async () => {
   //   sinon
   //     .stub(Example, "findOne")
@@ -37,11 +35,9 @@ describe('Desenvolva o endpoint /login no backend de maneira que ele permita o a
   //       ...<Seu mock>
   //     } as Example);
   // });
-
   // after(()=>{
   //   (Example.findOne as sinon.SinonStub).restore();
   // })
-
   // it('...', async () => {
   //   chaiHttpResponse = await chai
   //      .request(app)
@@ -198,8 +194,8 @@ describe('Desenvolva o endpoint /login/validate no back-end de maneira ele retor
   });
 });
 
-describe('Desenvolva o endpoint /clubs no back-end de forma que ele possa retornar todos os times corretamente', function() {
-  it('Será validado se todos os times são listados corretamente', function(done) {
+describe('Desenvolva o endpoint /clubs no back-end de forma que ele possa retornar todos os times corretamente', function () {
+  it('Será validado se todos os times são listados corretamente', function (done) {
     chai.request(app)
       .get('/clubs')
       .end((_err, res) => {
@@ -211,13 +207,13 @@ describe('Desenvolva o endpoint /clubs no back-end de forma que ele possa retorn
   });
 });
 
-describe('Desenvolva o endpoint /clubs/:id no back-end de forma que ele possa retornar o time especificado corretamente', function() {
+describe('Desenvolva o endpoint /clubs/:id no back-end de forma que ele possa retornar o time especificado corretamente', function () {
   const clubId14 = {
     id: 14,
     clubName: 'Santos',
   };
 
-  it('Será validado se o time especificado será listado corretamente', function(done) {
+  it('Será validado se o time especificado será listado corretamente', function (done) {
     chai.request(app)
       .get('/clubs/14')
       .end((_err, res) => {
@@ -229,90 +225,85 @@ describe('Desenvolva o endpoint /clubs/:id no back-end de forma que ele possa re
   });
 });
 
-describe('Desenvolva o endpoint /leaderboard/home de forma que seja possível filtrar a classificações dos times quando mandantes na tela de classificação do frontend com os dados iniciais do banco de dados', function() {
+describe('Desenvolva o endpoint /leaderboard/home de forma que seja possível filtrar a classificações dos times quando mandantes na tela de classificação do frontend com os dados iniciais do banco de dados', function () {
 
-  it('Será validado que os times serão listados corretamente', function(done) {
+  it('Será validado que os times serão listados corretamente', function (done) {
     chai.request(app)
       .get('/leaderboard/home')
       .end((_err, res) => {
         res.should.have.status(200);
         res.body.should.be.a('array');
         res.body.should.be.equal(leaderboardHomeDefault);
+        done();
       });
-    done();
   });
 });
 
-describe('Desenvolva o endpoint /leaderboard/home de forma que seja possível filtrar a classificações dos times quando mandantes na tela de classificação do frontend após inserir um novo jogo finalizado no banco de dados', function() {
-   beforeEach(() => {
-    const body = {homeTeam: 3, awayTeam: 8, homeTeamGoals: 2, awayTeamGoals: 1};
-    chai.request(app)
-      .post('/matchs')
-      .send(body)
-      .end(() => {
-        chai.request(app)
-        .patch('/matchs/49/finish')
-      })
-  });
-  it('Será validado que os times serão listados corretamente', function(done) {
-    chai.request(app)
-      .get('/leaderboard/home')
-      .end((_err, res) => {
-        res.should.have.status(200);
-        res.body.should.be.a('array');
-        res.body.should.be.equal(leaderboardHomeCustom);
-      });
-    done();
-  });
-});
+describe('Desenvolva o endpoint /leaderboard/away de forma que seja possível filtrar a classificações dos times quando visitantes na tela de classificação do frontend com os dados iniciais do banco de dados', function () {
 
-describe('Desenvolva o endpoint /leaderboard/away de forma que seja possível filtrar a classificações dos times quando visitantes na tela de classificação do frontend com os dados iniciais do banco de dados', function() {
-
-  it('Será validado que os times serão listados corretamente', function(done) {
+  it('Será validado que os times serão listados corretamente', function (done) {
     chai.request(app)
       .get('/leaderboard/away')
       .end((_err, res) => {
         res.should.have.status(200);
         res.body.should.be.a('array');
         res.body.should.be.equal(leaderboardAwayDefault);
+        done();
       });
-    done();
   });
 });
 
-describe('Desenvolva o endpoint /leaderboard/away de forma que seja possível filtrar a classificações dos times quando visitantes na tela de classificação do frontend após inserir um novo jogo finalizado no banco de dados', function() {
-  beforeEach(() => {
-   const body = {homeTeam: 3, awayTeam: 8, homeTeamGoals: 2, awayTeamGoals: 1};
-   chai.request(app)
-     .post('/matchs')
-     .send(body)
-     .end(() => {
-       chai.request(app)
-       .patch('/matchs/49/finish')
-     })
- });
- it('Será validado que os times serão listados corretamente', function(done) {
-   chai.request(app)
-     .get('/leaderboard/away')
-     .end((_err, res) => {
-       res.should.have.status(200);
-       res.body.should.be.a('array');
-       res.body.should.be.equal(leaderboardAwayCustom);
-     });
-   done();
- });
-});
+describe('Desenvolva o endpoint /leaderboard de forma que seja possível filtrar a classificações dos times na tela de classificação do frontend com os dados iniciais do banco de dados', function () {
 
-describe('Desenvolva o endpoint /leaderboard de forma que seja possível filtrar a classificações dos times na tela de classificação do frontend com os dados iniciais do banco de dados', function() {
-
-  it('Será validado que os times serão listados corretamente', function(done) {
+  it('Será validado que os times serão listados corretamente', function (done) {
     chai.request(app)
       .get('/leaderboard/')
       .end((_err, res) => {
         res.should.have.status(200);
         res.body.should.be.a('array');
-        res.body.should.be.equal(leaderboardAwayDefault);
+        res.body.should.be.equal(leaderboardDefault);
+        done();
       });
-    done();
+  });
+});
+
+describe('Desenvolva o endpoint GET /matchs para validar os dados iniciais do banco de dados', function () {
+
+  it('Será validado que os times serão listados corretamente', function (done) {
+    chai.request(app)
+      .get('/matchs/')
+      .end((_err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('array');
+        done();
+      });
+  });
+});
+
+describe('Desenvolva o endpoint POST /matchs para validar os dados da nova partida e inserir com sucesso', function () {
+
+  it('Será validado que os times serão listados corretamente', function (done) {
+    const body = {
+      homeTeam: 3,
+      awayTeam: 8,
+      homeTeamGoals: 2,
+      awayTeamGoals: 1,
+      inProgress: true
+    }
+
+    chai.request(app)
+      .post('/matchs/')
+      .send(body)
+      .end((_err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        res.body.should.have.property('homeTeam');
+        res.body.should.have.property('awayTeam');
+        res.body.should.have.property('homeTeamGoals');
+        res.body.should.have.property('awayTeamGoals');
+        res.body.should.have.property('inProgress');
+        res.body.should.have.property('inProgress').equal(true)
+        done();
+      });
   });
 });
