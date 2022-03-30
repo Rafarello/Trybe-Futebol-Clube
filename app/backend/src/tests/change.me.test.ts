@@ -266,7 +266,7 @@ describe('Desenvolva o endpoint /leaderboard/home de forma que seja possível fi
   });
 });
 
-describe('Desenvolva o endpoint /leaderboard/away de forma que seja possível filtrar a classificações dos times quando mandantes na tela de classificação do frontend com os dados iniciais do banco de dados', function() {
+describe('Desenvolva o endpoint /leaderboard/away de forma que seja possível filtrar a classificações dos times quando visitantes na tela de classificação do frontend com os dados iniciais do banco de dados', function() {
 
   it('Será validado que os times serão listados corretamente', function(done) {
     chai.request(app)
@@ -280,7 +280,7 @@ describe('Desenvolva o endpoint /leaderboard/away de forma que seja possível fi
   });
 });
 
-describe('Desenvolva o endpoint /leaderboard/away de forma que seja possível filtrar a classificações dos times quando mandantes na tela de classificação do frontend após inserir um novo jogo finalizado no banco de dados', function() {
+describe('Desenvolva o endpoint /leaderboard/away de forma que seja possível filtrar a classificações dos times quando visitantes na tela de classificação do frontend após inserir um novo jogo finalizado no banco de dados', function() {
   beforeEach(() => {
    const body = {homeTeam: 3, awayTeam: 8, homeTeamGoals: 2, awayTeamGoals: 1};
    chai.request(app)
@@ -301,4 +301,18 @@ describe('Desenvolva o endpoint /leaderboard/away de forma que seja possível fi
      });
    done();
  });
+});
+
+describe('Desenvolva o endpoint /leaderboard de forma que seja possível filtrar a classificações dos times na tela de classificação do frontend com os dados iniciais do banco de dados', function() {
+
+  it('Será validado que os times serão listados corretamente', function(done) {
+    chai.request(app)
+      .get('/leaderboard/')
+      .end((_err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('array');
+        res.body.should.be.equal(leaderboardAwayDefault);
+      });
+    done();
+  });
 });
