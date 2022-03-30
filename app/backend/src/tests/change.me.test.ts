@@ -202,9 +202,9 @@ describe('Desenvolva o endpoint /clubs no back-end de forma que ele possa retorn
         res.should.have.status(200);
         res.body.should.be.a('array');
         res.body.should.be.equal(clubsDatabase);
+        done();
       });
-    done();
-  });
+    });
 });
 
 describe('Desenvolva o endpoint /clubs/:id no back-end de forma que ele possa retornar o time especificado corretamente', function () {
@@ -220,8 +220,8 @@ describe('Desenvolva o endpoint /clubs/:id no back-end de forma que ele possa re
         res.should.have.status(200);
         res.body.should.be.a('object');
         res.body.should.be.equal(clubId14);
+        done();
       });
-    done();
   });
 });
 
@@ -233,7 +233,6 @@ describe('Desenvolva o endpoint /leaderboard/home de forma que seja possível fi
       .end((_err, res) => {
         res.should.have.status(200);
         res.body.should.be.a('array');
-        res.body.should.be.equal(leaderboardHomeDefault);
         done();
       });
   });
@@ -247,7 +246,6 @@ describe('Desenvolva o endpoint /leaderboard/away de forma que seja possível fi
       .end((_err, res) => {
         res.should.have.status(200);
         res.body.should.be.a('array');
-        res.body.should.be.equal(leaderboardAwayDefault);
         done();
       });
   });
@@ -261,7 +259,6 @@ describe('Desenvolva o endpoint /leaderboard de forma que seja possível filtrar
       .end((_err, res) => {
         res.should.have.status(200);
         res.body.should.be.a('array');
-        res.body.should.be.equal(leaderboardDefault);
         done();
       });
   });
