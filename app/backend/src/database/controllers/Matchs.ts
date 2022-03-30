@@ -38,11 +38,11 @@ class MatchsController {
     return res.status(200).json({ message: 'OK' });
   }
 
-  public static async updateMatchResult(req: Request, _res: Response, next: NextFunction) {
+  public static async updateMatchResult(req: Request, res: Response) {
     const { body } = req;
     const { id } = req.params;
     await MatchsServices.updateMatchResult(body, id);
-    next();
+    return res.status(200).json({ message: 'Ok' });
   }
 
   public static async tokenValidation(req: Request, res: Response, next: NextFunction) {
