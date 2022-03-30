@@ -7,6 +7,8 @@ import Sinon = require('sinon');
 import { app } from '../app';
 import Example from '../database/models/ExampleModel';
 import clubsDatabase from './clubsDatabase';
+import { leaderboardHomeDefault, leaderboardHomeCustom } from './expectedResults/leaderboard_home';
+import { leaderboardAwayDefault, leaderboardAwayCustom } from './expectedResults/leaderboard_away';
 
 chai.use(chaiHttp);
 
@@ -225,4 +227,78 @@ describe('Desenvolva o endpoint /clubs/:id no back-end de forma que ele possa re
       });
     done();
   });
+});
+
+describe('Desenvolva o endpoint /leaderboard/home de forma que seja possível filtrar a classificações dos times quando mandantes na tela de classificação do frontend com os dados iniciais do banco de dados', function() {
+
+  it('Será validado que os times serão listados corretamente', function(done) {
+    chai.request(app)
+      .get('/leaderboard/home')
+      .end((_err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('array');
+        res.body.should.be.equal(leaderboardHomeDefault);
+      });
+    done();
+  });
+});
+
+describe('Desenvolva o endpoint /leaderboard/home de forma que seja possível filtrar a classificações dos times quando mandantes na tela de classificação do frontend após inserir um novo jogo finalizado no banco de dados', function() {
+   beforeEach(() => {
+    const body = {homeTeam: 3, awayTeam: 8, homeTeamGoals: 2, awayTeamGoals: 1};
+    chai.request(app)
+      .post('/matchs')
+      .send(body)
+      .end(() => {
+        chai.request(app)
+        .patch('/matchs/49/finish')
+      })
+  });
+  it('Será validado que os times serão listados corretamente', function(done) {
+    chai.request(app)
+      .get('/leaderboard/home')
+      .end((_err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('array');
+        res.body.should.be.equal(leaderboardHomeCustom);
+      });
+    done();
+  });
+});
+
+describe('Desenvolva o endpoint /leaderboard/away de forma que seja possível filtrar a classificações dos times quando mandantes na tela de classificação do frontend com os dados iniciais do banco de dados', function() {
+
+  it('Será validado que os times serão listados corretamente', function(done) {
+    chai.request(app)
+      .get('/leaderboard/away')
+      .end((_err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('array');
+        res.body.should.be.equal(leaderboardAwayDefault);
+      });
+    done();
+  });
+});
+
+describe('Desenvolva o endpoint /leaderboard/away de forma que seja possível filtrar a classificações dos times quando mandantes na tela de classificação do frontend após inserir um novo jogo finalizado no banco de dados', function() {
+  beforeEach(() => {
+   const body = {homeTeam: 3, awayTeam: 8, homeTeamGoals: 2, awayTeamGoals: 1};
+   chai.request(app)
+     .post('/matchs')
+     .send(body)
+     .end(() => {
+       chai.request(app)
+       .patch('/matchs/49/finish')
+     })
+ });
+ it('Será validado que os times serão listados corretamente', function(done) {
+   chai.request(app)
+     .get('/leaderboard/away')
+     .end((_err, res) => {
+       res.should.have.status(200);
+       res.body.should.be.a('array');
+       res.body.should.be.equal(leaderboardAwayCustom);
+     });
+   done();
+ });
 });
