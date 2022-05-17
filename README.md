@@ -1,12 +1,12 @@
 **Projeto Trybe Futebol Clube**
 
-- Projeto com foco de aprendizado em Back-end
+  Projeto com foco de aprendizado em Back-end
 
 **_Resumo:_** 
 
-Foi fornecido um site de uma tabela esportiva de campeonato de futebol, construído em React e com várias páginas. Para cada página foi necessário construir uma rota para API para os diversos tipos de requisições necessárias.
+  Foi fornecido um site de uma tabela esportiva de campeonato de futebol, construído em React e com várias páginas. Para cada página foi necessário construir uma rota para API para os diversos tipos de requisições necessárias.
 
-Segue abaixo a lista de requisitos e detalhes das rotas da API
+  Segue abaixo a lista de requisitos e detalhes das rotas da API
 
 **Lista Pré-Requisitos:**
 
