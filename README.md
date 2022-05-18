@@ -16,7 +16,17 @@ Segue abaixo a lista de requisitos e detalhes das rotas da API:
 
 #### GET - /login/validate - Rota que faz a verificação da presença do token de autorização no `headers`, na chave `Authorization` retornando status `201` se possuir e `401` caso contrário (não estar com token presente).
 
+### **Rota de Clubs:**
 
+#### GET - /clubs - Retorna status `200` com todos os clubes salvos no banco de dados 
+
+#### GET - /clubs/:id - Retorna status `200` com o clube de id especificado
+
+### **Rota de Matchs:**
+
+#### GET - /matchs - Retorna status `200` com todos os jogos salvos no banco de dados 
+
+#### POST - /matchs- Rota que cria um novo jogo no banco de dados, possui middleware de validação de token de usuário e validação de informações passadas do novo jogo. Se as informações estiverem corretas e o jogo for criado com sucesso, terá um status de retorno `201` com as informações do jogo na resposta, caso contrário um status e uma mensagem de erro constarão na resposta.
 
 **Lista Pré-Requisitos:**
 
