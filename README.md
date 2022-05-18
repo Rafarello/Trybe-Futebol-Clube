@@ -121,6 +121,6 @@ Jogos
 
 #### Nesse projeto, diferente dos outros de construção de APIs Restful, foi utilizado Docker. 
 
-#### Também foi o primeiro projeto com um grau maior de dificuldade de tratamento das informações do banco de dados utilizando a ORM Sequelize, principalmente na rota de Clubes e de Tabelas de Classificação.
+#### Também foi o primeiro projeto com um grau maior de complexidade no tratamento das informações do banco de dados utilizando a ORM Sequelize, principalmente na rota de Clubes e de Tabelas de Classificação.
 
 #### Testes possuem uma estrutura diferente que vi em um tutorial na Digital Ocean, a qual não usa `expect` e sim `should` e preposições como `have`
