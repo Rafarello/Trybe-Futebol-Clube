@@ -115,7 +115,9 @@ Jogos
 
 #### Terceiro passo: Ir na pasta de Front-end e digitar no terminal `npm run start` para iniciar o servidor do React.
 
-#### Quarto passo: Ir na pasta de Back-end e digitar no terminal `npm run dev` para iniciar a API
+#### Quarto passo: Aqui é apenas um detalhe para configurar o servidor mysql no arquivo de configurações no Back-end na pasta `\backend\src\database\config` ou criar um arquivo .env como o exemplo demonstra
+
+#### Quinto passo: Ir na pasta de Back-end e digitar no terminal `npm run dev` para iniciar a API
 
 ## Observações de aprendizado:
 
