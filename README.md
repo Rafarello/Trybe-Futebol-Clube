@@ -26,6 +26,18 @@
 
 #### POST - /matchs- Rota que cria um novo jogo no banco de dados, possui middleware de validação de token de usuário e validação de informações passadas do novo jogo. Se as informações estiverem corretas e o jogo for criado com sucesso, terá um status de retorno `201` com as informações do jogo na resposta, caso contrário um status e uma mensagem de erro constarão na resposta.
 
+#### PATCH - /matchs/:id/finish - Rota que finaliza o jogo com o id especificado. Tem como retorno esperado status `200` e uma mensagem de Ok.
+
+#### PATCH - /matchs/:id - Rota que atualiza o resultado de um jogo com id especificado. Tem como retorno esperado status `200` e uma mensagem de Ok.
+
+### **Rota de Leaderboard:**
+
+#### GET - /leaderboard/home - Retorna status `200` com a tabela de classificação dos times, considerando apenas jogos feitos em **casa** 
+
+#### GET - /leaderboard/away - Retorna status `200` com a tabela de classificação dos times, considerando apenas jogos feitos **fora de casa** 
+
+#### GET - /leaderboard - Retorna status `200` com a tabela de classificação dos times, considerando **todos os jogos**
+
 **Lista Pré-Requisitos:**
 
 _**Docker e Docker-compose**_
