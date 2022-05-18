@@ -1,6 +1,6 @@
 # **Projeto Trybe Futebol Clube :soccer:**
 
-  ## Projeto com foco de aprendizado em Back-end
+## Projeto com foco de aprendizado em Back-end
 
 ## **_Resumo:_** 
 
@@ -106,6 +106,16 @@ Jogos
 #### - [x] 34 - Desenvolva o endpoint /leaderboard de forma que seja possível filtrar a classificação geral dos times na tela de classificação do frontend e ao inserir a partida Flamengo 3 X 0 Napoli-SC a tabela será atualizada
 
 #### - [x] 35 - Desenvolva o endpoint /leaderboard de forma que seja possível filtrar a classificação geral dos times na tela de classificação do frontend e ao inserir a partida Minas Brasília 1 X 0 Ferroviária a tabela será atualizada
+
+## Como iniciar o projeto:
+
+#### Primeiro passo: Faça o clone em sua máquina
+
+#### Segundo passo: na pasta raíz, digite no terminal `npm run install:apps`. Esse comando instalará tanto o Front-end quanto o Back-end
+
+#### Terceiro passo: Ir na pasta de Front-end e digitar no terminal `npm run start` para iniciar o servidor do React.
+
+#### Quarto passo: Ir na pasta de Back-end e digitar no terminal `npm run dev` para iniciar a API
 
 ## Observações de aprendizado:
 
