@@ -113,4 +113,4 @@ Jogos
 
 #### Também foi o primeiro projeto com um grau maior de dificuldade de tratamento das informações do banco de dados utilizando a ORM Sequelize, principalmente na rota de Clubes e de Tabelas de Classificação.
 
-#### Testes possuem uma estrutura diferente que vi em um tutorial na Digital Ocean.
+#### Testes possuem uma estrutura diferente que vi em um tutorial na Digital Ocean, a qual não usa `expect` e sim `should` e preposições como `have`
