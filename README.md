@@ -8,6 +8,16 @@
 
 Segue abaixo a lista de requisitos e detalhes das rotas da API:
 
+## Detalhe das rotas: 
+
+### **Rota de Login:**
+
+#### POST - /login - Requisição que envia o corpo com as informações de login do usuário que possui um middleware de validação. Retorna `200` se as informações estiverem corretas e com status `401` se possuir alguma discordância das informações que o usuário forneceu ou algum dado de entrada mal formatado. O `erro` seguirá como mensagem junto com o status `401`.
+
+#### GET - /login/validate - Rota que faz a verificação da presença do token de autorização no `headers`, na chave `Authorization` retornando status `201` se possuir e `401` caso contrário (não estar com token presente).
+
+
+
 **Lista Pré-Requisitos:**
 
 _**Docker e Docker-compose**_
@@ -77,13 +87,3 @@ Jogos
 
 - [x] 35 - Desenvolva o endpoint /leaderboard de forma que seja possível filtrar a classificação geral dos times na tela de classificação do frontend e ao inserir a partida Minas Brasília 1 X 0 Ferroviária a tabela será atualizada
 
-
-
-
-## Detalhe das rotas: 
-
-### **Rota de Login:**
-
-##### POST - /login - Requisição que envia o corpo com as informações de login do usuário que possui um middleware de validação. Retorna `200` se as informações estiverem corretas e com status `401` se possuir alguma discordância das informações que o usuário forneceu ou algum dado de entrada mal formatado. O `erro` seguirá como mensagem junto com o status `401`.
-
-##### GET - /login/validate - Rota que faz a verificação da presença do token de autorização no `headers`, na chave `Authorization` retornando status `201` se possuir e `401` caso contrário (não estar com token presente).
