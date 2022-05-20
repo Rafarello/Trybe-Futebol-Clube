@@ -13,6 +13,7 @@ import { leaderboardDefault } from './expectedResults/leaderboard';
 chai.use(chaiHttp);
 
 const { expect } = chai;
+let should = chai.should();
 
 // # Exemplo de testes com Chai
 //
