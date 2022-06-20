@@ -6,6 +6,26 @@
 
 ###  Foi fornecido um site de uma tabela esportiva de campeonato de futebol construído em React que possui várias páginas, para cada página foi necessário construir uma rota para API para os diversos tipos de requisições necessárias.
 
+## Como iniciar o projeto:
+
+#### Primeiro passo: Faça o clone em sua máquina
+
+#### Segundo passo: na pasta raíz, digite no terminal `npm run install:apps`. Esse comando instalará tanto o Front-end quanto o Back-end
+
+#### Terceiro passo: Ir na pasta de Front-end e digitar no terminal `npm run start` para iniciar o servidor do React.
+
+#### Quarto passo: Aqui é apenas um detalhe para configurar o servidor mysql no arquivo de configurações no Back-end na pasta `\backend\src\database\config` ou criar um arquivo .env como o exemplo demonstra
+
+#### Quinto passo: Ir na pasta de Back-end e digitar no terminal `npm run dev` para iniciar a API
+
+## Observações de aprendizado:
+
+#### Nesse projeto, diferente dos outros de construção de APIs Restful, foi utilizado Docker. 
+
+#### Também foi o primeiro projeto com um grau maior de complexidade no tratamento das informações do banco de dados utilizando a ORM Sequelize, principalmente na rota de Clubes e de Tabelas de Classificação.
+
+#### Testes possuem uma estrutura diferente que vi em um tutorial na Digital Ocean, a qual não usa `expect` e sim `should` e preposições como `have`
+
 ## Detalhe das rotas: 
 
 ### **Rota de Login:**
@@ -107,22 +127,4 @@ Jogos
 
 #### - [x] 35 - Desenvolva o endpoint /leaderboard de forma que seja possível filtrar a classificação geral dos times na tela de classificação do frontend e ao inserir a partida Minas Brasília 1 X 0 Ferroviária a tabela será atualizada
 
-## Como iniciar o projeto:
 
-#### Primeiro passo: Faça o clone em sua máquina
-
-#### Segundo passo: na pasta raíz, digite no terminal `npm run install:apps`. Esse comando instalará tanto o Front-end quanto o Back-end
-
-#### Terceiro passo: Ir na pasta de Front-end e digitar no terminal `npm run start` para iniciar o servidor do React.
-
-#### Quarto passo: Aqui é apenas um detalhe para configurar o servidor mysql no arquivo de configurações no Back-end na pasta `\backend\src\database\config` ou criar um arquivo .env como o exemplo demonstra
-
-#### Quinto passo: Ir na pasta de Back-end e digitar no terminal `npm run dev` para iniciar a API
-
-## Observações de aprendizado:
-
-#### Nesse projeto, diferente dos outros de construção de APIs Restful, foi utilizado Docker. 
-
-#### Também foi o primeiro projeto com um grau maior de complexidade no tratamento das informações do banco de dados utilizando a ORM Sequelize, principalmente na rota de Clubes e de Tabelas de Classificação.
-
-#### Testes possuem uma estrutura diferente que vi em um tutorial na Digital Ocean, a qual não usa `expect` e sim `should` e preposições como `have`
